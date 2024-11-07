@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator
 from .building import Building
 from .flatcategory import FlatCategory
 from .floor import Floor
-#from .section import Section
+from .section import Section
 
 
 class Flat(models.Model):
@@ -31,7 +31,7 @@ class Flat(models.Model):
     photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
     floor = models.ForeignKey(Floor, on_delete=models.PROTECT, verbose_name="Этаж")
     category = models.ForeignKey(FlatCategory, null=True, blank=True, on_delete=models.PROTECT, verbose_name='Класс квартиры')
-    #section = models.ForeignKey(Section, on_delete=models.PROTECT, verbose_name="Секция")
+    section = models.ForeignKey(Section, null=True, on_delete=models.PROTECT, verbose_name="Секция")
     building = models.ForeignKey(Building, null=True, blank=True, on_delete=models.PROTECT, verbose_name="Дом")
 
     class Meta:

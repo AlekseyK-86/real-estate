@@ -1,4 +1,4 @@
-from django.db import models # type: ignore
+from django.db import models
 
 class Floor(models.Model):
     name = models.CharField(max_length=100)

@@ -40,18 +40,12 @@ class FloorSelector:
     @staticmethod
     def get_floor_detail(pk) -> List[FlatEntity]:
         try:
-            """ flat_set: Это имя обратного отношения, через которое можно получить все объекты Flat, 
-            связанные с конкретным объектом Floor. set подразумевает, 
-            что к одному объекту Floor может соответствовать несколько объектов Flat."""
             floor = Floor.objects.prefetch_related(
                 'flat_set__floor',
                 'flat_set__category',
                 'flat_set__building'
             ).get(id=pk) 
         except (ObjectDoesNotExist, MultipleObjectsReturned):
-            """ ObjectDoesNotExist - запрашиваемый объект не найден в базе данных
-            MultipleObjectsReturned - запрос get() возвращает более одного объекта. 
-            Метод get() предполагает, что результатом будет только один объект"""
             return None
         flats = floor.flat_set.all()
 

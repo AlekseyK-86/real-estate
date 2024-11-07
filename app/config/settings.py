@@ -7,9 +7,10 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
+
 SECRET_KEY = os.getenv('SECRET_KEY') or sys.exit('SECRET_KEY environment variable is not set.')
 
-DEBUG = os.getenv('DEBUG')
+DEBUG = os.getenv('DEBUG') or sys.exit('DEBUG environment variable is not set.')
 
 
 ALLOWED_HOSTS = ['*']
@@ -105,11 +106,11 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Real-estate", # название проекта
-    "VERSION": "0.0.1", # версия проекта
-    "SERVE_INCLUDE_SCHEMA": False, # исключить эндпоинт /schema
+    "TITLE": "Real-estate",
+    "VERSION": "0.0.1",
+    "SERVE_INCLUDE_SCHEMA": False,
     "SWAGGER_UI_SETTINGS": {
-        "filter": True, # включить поиск по тегам
+        "filter": True,
     },
     "COMPONENT_SPLIT_REQUEST": True
 }
