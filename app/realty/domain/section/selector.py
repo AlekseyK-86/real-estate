@@ -9,8 +9,8 @@ from typing import List
 class SectionSelector:
     @staticmethod
     def get_sections_with_total_flats() -> List[FlatEntity]:
-        floors = Section.objects.annotate(total_flats=Count('flat'))
-        return floors
+        sections = Section.objects.annotate(total_flats=Count('flat'))
+        return sections
 
     @staticmethod
     def query_set_to_dataclass(queryset, section) -> List[FlatEntity]:
