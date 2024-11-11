@@ -5,6 +5,7 @@ from config import settings
 api_v1_urls = [
     path('flats/', include('realty.domain.flat.urls')),
     path('floors/', include('realty.domain.floor.urls')),
+    path('sections/', include('realty.domain.section.urls')),
     path('buildings/', include('realty.domain.building.urls')),
     path('projects/', include('realty.domain.project.urls')),
 ]
