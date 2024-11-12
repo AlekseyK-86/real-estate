@@ -6,7 +6,7 @@ from .selector import FlatSelector
 
 
 class FlatListView(APIView):
-    class FlatSerializer(serializers.Serializer):
+    class FlatListSerializer(serializers.Serializer):
         id = serializers.IntegerField()
         square = serializers.FloatField()
         living_space = serializers.FloatField()
@@ -20,12 +20,12 @@ class FlatListView(APIView):
 
     def get(self, request):
         flats = FlatSelector.get_all_flats()
-        all_flats = self.FlatSerializer(flats, many=True).data
+        all_flats = self.FlatListSerializer(flats, many=True).data
         return Response(all_flats)
 
 
 class FlatDetailView(APIView):
-    class FlatSerializer(serializers.Serializer):
+    class FlatDetailSerializer(serializers.Serializer):
         id = serializers.IntegerField()
         square = serializers.FloatField()
         living_space = serializers.FloatField()
@@ -41,5 +41,5 @@ class FlatDetailView(APIView):
 
     def get(self, request, flat_id):
         flat = FlatSelector.get_flat_by_id(flat_id)
-        serializer = self.FlatSerializer(flat).data
+        serializer = self.FlatDetailSerializer(flat).data
         return Response(serializer)

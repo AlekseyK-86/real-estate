@@ -8,7 +8,7 @@ from realty.inline_serializer import inline_serializer
 
 
 class SectionListView(APIView):
-    class ListSectionSerializer(serializers.Serializer):
+    class SectionListSerializer(serializers.Serializer):
         id = serializers.IntegerField()
         name = serializers.CharField()
         number = serializers.IntegerField()
@@ -16,11 +16,11 @@ class SectionListView(APIView):
 
     def get(self, request):
         all_floors = SectionSelector.get_sections_with_total_flats()
-        return Response(data=self.ListSectionSerializer(all_floors, many=True).data)
+        return Response(data=self.SectionListSerializer(all_floors, many=True).data)
 
 
 class SectionDetailView(APIView):
-    class DetailSectionSerializer(serializers.Serializer):
+    class SectionDetailSerializer(serializers.Serializer):
         id = serializers.IntegerField()
         name = serializers.CharField()
         number = serializers.IntegerField()
@@ -49,4 +49,4 @@ class SectionDetailView(APIView):
         if not section:
             return Response({'error': 'Object does not exist'})
 
-        return Response(data=self.DetailSectionSerializer(section).data)
+        return Response(data=self.SectionDetailSerializer(section).data)
