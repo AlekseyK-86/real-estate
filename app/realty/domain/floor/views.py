@@ -8,7 +8,7 @@ from realty.inline_serializer import inline_serializer
 
 
 class FloorListView(APIView):
-    class ListFloorSerializer(serializers.Serializer):
+    class FloorListSerializer(serializers.Serializer):
         id = serializers.IntegerField()
         name = serializers.CharField()
         number = serializers.IntegerField()
@@ -16,11 +16,11 @@ class FloorListView(APIView):
 
     def get(self, request):
         all_floors = FloorSelector.get_floors_with_total_flats()
-        return Response(data=self.ListFloorSerializer(all_floors, many=True).data)
+        return Response(data=self.FloorListSerializer(all_floors, many=True).data)
 
 
 class FloorDetailView(APIView):
-    class DetailFloorSerializer(serializers.Serializer):
+    class FloorDetailSerializer(serializers.Serializer):
         id = serializers.IntegerField()
         name = serializers.CharField()
         number = serializers.IntegerField()
@@ -49,4 +49,4 @@ class FloorDetailView(APIView):
         if not floor:
             return Response({'error': 'Object does not exist'})
 
-        return Response(data=self.DetailFloorSerializer(floor).data)
+        return Response(data=self.FloorDetailSerializer(floor).data)
