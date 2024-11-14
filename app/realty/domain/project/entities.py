@@ -5,4 +5,7 @@ from realty.domain.building.entities import BuildingEntity
 
 @dataclass
 class ProjectEntity:
-    pass
+    id: int
+    name: str
+    description: str
+    buildings: list[BuildingEntity]
