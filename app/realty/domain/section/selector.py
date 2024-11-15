@@ -1,10 +1,12 @@
+from typing import List
+
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db.models import Count
 
 from realty.domain.flat.entities import FlatEntity
 from realty.domain.section.entities import SectionEntity
 from realty.models.section import Section
-from typing import List
+
 
 class SectionSelector:
     @staticmethod
@@ -45,8 +47,10 @@ class SectionSelector:
                 'flat_set__category',
                 'flat_set__building'
             ).get(id=pk) 
-        except (ObjectDoesNotExist, MultipleObjectsReturned):
-            return None
+        except ObjectDoesNotExist:
+            raise ObjectDoesNotExist(f"Объект c id={pk} в модели Section не найден.")
+        except MultipleObjectsReturned:
+            raise MultipleObjectsReturned(f"Что то пошло не так, из модели Section вернулось более чем один объект.")
         flats = section.flat_set.all()
 
         data = SectionSelector.query_set_to_dataclass(flats, section)
