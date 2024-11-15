@@ -24,9 +24,10 @@ class ProjectSelector:
                 )
                 .get(id=pk)
             )
-        except (ObjectDoesNotExist, MultipleObjectsReturned):
-            return None
-
+        except ObjectDoesNotExist:
+            raise ObjectDoesNotExist(f"Объект c id={pk} в модели Project не найден.")
+        except MultipleObjectsReturned:
+            raise MultipleObjectsReturned(f"Что то пошло не так, из модели Project вернулось более чем один объект.")
         data = ProjectEntity(
             id=project.id,
             name=project.name,
