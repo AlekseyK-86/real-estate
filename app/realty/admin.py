@@ -3,6 +3,7 @@ from realty.models.flat import Flat
 from realty.models.floor import Floor
 from realty.models.building import Building
 from realty.models.project import Project
+from realty.models.section import Section
 
 class FlatAdmin(admin.ModelAdmin):
     list_display = ("price", "status", "category", "square", "rooms", "living_space", "kitchen_area",)
@@ -28,5 +29,6 @@ class ProjectAdmin(admin.ModelAdmin):
 
 admin.site.register(Flat, FlatAdmin)
 admin.site.register(Floor, FloorAdmin)
+admin.site.register(Section, SectionAdmin)
 admin.site.register(Building, BuildingAdmin)
 admin.site.register(Project, ProjectAdmin)

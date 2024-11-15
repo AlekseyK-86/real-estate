@@ -41,3 +41,7 @@ class Building(models.Model):
     has_parking = models.BooleanField(default=True, verbose_name='Паркинг')
     elevators = models.IntegerField(choices=ELEVATORS_CHOICES, default=TWO_ELEVATORS, verbose_name='Лифты')
     project = models.ForeignKey(Project, null=True, blank=True, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name = "Дом"
+        verbose_name_plural = "Дома"

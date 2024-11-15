@@ -1,9 +1,9 @@
+from typing import List
+
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from realty.domain.flat.entities import FlatEntity
 from realty.models.flat import Flat
-
-from typing import List
 
 from drf_spectacular.utils import extend_schema
 

@@ -1,10 +1,12 @@
+from typing import List
+
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db.models import Count
 
 from realty.domain.flat.entities import FlatEntity
 from realty.domain.floor.entities import FloorEntity
 from realty.models.floor import Floor
-from typing import List
+
 
 class FloorSelector:
     @staticmethod
@@ -45,8 +47,10 @@ class FloorSelector:
                 'flat_set__category',
                 'flat_set__building'
             ).get(id=pk) 
-        except (ObjectDoesNotExist, MultipleObjectsReturned):
-            return None
+        except ObjectDoesNotExist:
+            raise ObjectDoesNotExist(f"Объект c id={pk} в модели Floor не найден.")
+        except MultipleObjectsReturned:
+            raise MultipleObjectsReturned(f"Что то пошло не так, из модели Floor вернулось более чем один объект.")
         flats = floor.flat_set.all()
 
         data = FloorSelector.query_set_to_dataclass(flats, floor)

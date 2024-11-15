@@ -1,8 +1,9 @@
+from typing import List
+
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from realty.domain.building.entities import BuildingDetailEntity, BuildingEntity
 from realty.models.building import Building
-from typing import List
 
 
 class BuildingSelector:
