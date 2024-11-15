@@ -44,7 +44,5 @@ class ProjectDetailView(APIView):
 
     def get(self, request, project_id):
         project = ProjectSelector.get_project_detail(project_id)
-        #if not project:
-        #    return Response({'error': 'Object does not exist'})
 
         return Response(data=self.ProjectDetailSerializer(project).data)
