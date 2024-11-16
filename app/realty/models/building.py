@@ -45,3 +45,6 @@ class Building(models.Model):
     class Meta:
         verbose_name = "Дом"
         verbose_name_plural = "Дома"
+    
+    def __str__(self):
+        return self.name

@@ -9,3 +9,6 @@ class Section(models.Model):
     class Meta:
         verbose_name = "Секция"
         verbose_name_plural = "Секции"
+
+    def __str__(self):
+        return self.name
