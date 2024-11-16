@@ -33,11 +33,13 @@ class ProjectSelector:
             id=project.id,
             name=project.name,
             description=project.description,
+            photo=project.photo,
             buildings=[
                 BuildingEntity(
-                    id=building.id,
+                    id=building.id,                    
                     floors=building.floors,
                     name=building.name,
+                    photo=building.photo,
                     date_of_construction=building.date_of_construction,
                     date_of_delivery=building.date_of_delivery,
                     address=building.address,

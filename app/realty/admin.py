@@ -15,10 +15,16 @@ class FlatAdmin(admin.ModelAdmin):
         "rooms", 
         "living_space", 
         "kitchen_area",
+        "photo",
+        "get_floor_number",
         )
     search_fields = ("price", "category",)
     list_filter = ("status", ("category", admin.RelatedFieldListFilter), "rooms",)
     list_editable = ("status", "category",)
+
+    def get_floor_number(self, obj):
+        return obj.floor.number
+    get_floor_number.short_description = 'Этаж' 
 
 admin.site.register(Flat, FlatAdmin)
 
@@ -46,6 +52,7 @@ class BuildingAdmin(admin.ModelAdmin):
         "has_parking", 
         "elevators", 
         "get_project_name",
+        "photo",
     )
     search_fields = ("address", "category",)
     list_filter = ("status", "type", "has_parking", "elevators", ("project", admin.RelatedFieldListFilter),)
@@ -60,7 +67,7 @@ admin.site.register(Building, BuildingAdmin)
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("name", "description",)
+    list_display = ("name", "description","photo",)
     list_filter = ("name",)
 
 admin.site.register(Project, ProjectAdmin)
