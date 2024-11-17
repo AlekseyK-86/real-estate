@@ -4,16 +4,14 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 from .project import Project
+from realty.mixins import UploadToMixin
 
 
-class Building(models.Model):
+class Building(UploadToMixin, models.Model):
 
     def upload_to(instance, filename):
-        valid_extensions = ['.jpg', '.jpeg', '.png']
-        ext = os.path.splitext(filename)[1].lower()
-        if ext not in valid_extensions:
-            raise ValidationError(f"Поддерживаются только следующие форматы: {', '.join(valid_extensions)}")
-        
+        UploadToMixin.valid_extensions(instance, filename)
+
         building_number = str(instance.number)
         project_name = instance.project.name.replace(" ", "_")
 
@@ -46,7 +44,7 @@ class Building(models.Model):
     ]
 
     name = models.CharField(max_length=100, verbose_name='Название')
-    photo = models.ImageField(upload_to=upload_to, verbose_name="Изображение") # "photos/building/%Y/%m/%d/"
+    photo = models.ImageField(upload_to=upload_to, verbose_name="Изображение") 
     floors = models.PositiveSmallIntegerField(verbose_name='Количество этажей')
     date_of_construction = models.DateField(verbose_name='Дата постройки дома')
     date_of_delivery = models.DateField(verbose_name='Дата сдачи дома')
