@@ -8,4 +8,5 @@ class ProjectEntity:
     id: int
     name: str
     description: str
+    photo: str
     buildings: list[BuildingEntity]

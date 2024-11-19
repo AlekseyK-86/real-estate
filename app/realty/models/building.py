@@ -1,9 +1,22 @@
+import os
+
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from .project import Project
+from realty.mixins import UploadToMixin
 
 
-class Building(models.Model):
+class Building(UploadToMixin, models.Model):
+
+    def upload_to(self, filename):
+        self.valid_extensions(filename)
+
+        building_number = str(self.number)
+        project_name = self.project.name.replace(" ", "_")
+
+        return os.path.join('photos/',project_name, building_number, filename)
+
     STATUS_UNDER_CONSTRUCTION = 'Under construction'
     STATUS_PASSED = 'Passed'
 
@@ -31,6 +44,7 @@ class Building(models.Model):
     ]
 
     name = models.CharField(max_length=100, verbose_name='Название')
+    photo = models.ImageField(upload_to=upload_to, verbose_name="Изображение") 
     floors = models.PositiveSmallIntegerField(verbose_name='Количество этажей')
     date_of_construction = models.DateField(verbose_name='Дата постройки дома')
     date_of_delivery = models.DateField(verbose_name='Дата сдачи дома')

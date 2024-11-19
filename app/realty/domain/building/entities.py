@@ -6,6 +6,7 @@ class BuildingEntity:
     id: int
     floors: int
     name: str
+    photo: str
     date_of_construction: str
     date_of_delivery: str
     address: str

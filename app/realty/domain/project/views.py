@@ -11,6 +11,7 @@ class ProjectListView(APIView):
         id = serializers.IntegerField()
         name = serializers.CharField()
         description = serializers.CharField()
+        photo = serializers.ImageField()
 
     def get(self, request):
         all_projects = ProjectSelector.get_all_projects()
@@ -23,12 +24,14 @@ class ProjectDetailView(APIView):
         id = serializers.IntegerField()
         name = serializers.CharField()
         description = serializers.CharField()
+        photo = serializers.ImageField()
         buildings = inline_serializer(
             name='Buildings',
             fields={
                 'id': serializers.IntegerField(),
                 'floors': serializers.IntegerField(),
                 'name': serializers.CharField(),
+                'photo': serializers.ImageField(),
                 'date_of_construction': serializers.DateField(),
                 'date_of_delivery': serializers.DateField(),
                 'address': serializers.CharField(),
