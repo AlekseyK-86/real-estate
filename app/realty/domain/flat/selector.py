@@ -1,9 +1,7 @@
 from typing import List
 
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-
 from realty.domain.flat.entities import FlatEntity
-from realty.models.flat import Flat
+from realty.repositories.flat import FlatRepository
 
 from drf_spectacular.utils import extend_schema
 
@@ -33,18 +31,16 @@ class FlatSelector:
     @staticmethod
     #@extend_schema(summary="API для получение всех квартир ")
     def get_all_flats():
-        flats = Flat.objects.all().select_related('floor', 'category', 'building')
+        flats = FlatRepository.fetch_all_flats()
         data = FlatSelector.query_set_all_to_dataclass(flats)
+        
         return data
 
 
     @staticmethod
     #@extend_schema(summary="API для получение одной квартир ")
-    def get_flat_by_id(flat_id) -> List[FlatEntity]:
-        try:
-            flat = Flat.objects.select_related('floor', 'category', 'building').get(id=flat_id)
-        except (ObjectDoesNotExist, MultipleObjectsReturned):
-            return None
+    def get_flat_by_id(pk) -> List[FlatEntity]:
+        flat = FlatRepository.fetch_flat_detail(pk)
 
         data = FlatEntity(
             id=flat.id,
@@ -60,4 +56,5 @@ class FlatSelector:
             category_name=flat.category.name,
             building_name=flat.building.name
         )
+
         return data

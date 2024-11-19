@@ -1,18 +1,14 @@
 from typing import List
 
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from django.db.models import Count
-
 from realty.domain.flat.entities import FlatEntity
 from realty.domain.floor.entities import FloorEntity
-from realty.models.floor import Floor
+from realty.repositories.floor import FloorRepository
 
 
 class FloorSelector:
     @staticmethod
     def get_floors_with_total_flats() -> List[FlatEntity]:
-        floors = Floor.objects.annotate(total_flats=Count('flat'))
-        return floors
+        return FloorRepository.fetch_all_floors()
 
     @staticmethod
     def query_set_to_dataclass(queryset, floor) -> List[FlatEntity]:
@@ -41,18 +37,7 @@ class FloorSelector:
 
     @staticmethod
     def get_floor_detail(pk) -> List[FlatEntity]:
-        try:
-            floor = Floor.objects.prefetch_related(
-                'flat_set__floor',
-                'flat_set__category',
-                'flat_set__building'
-            ).get(id=pk) 
-        except ObjectDoesNotExist:
-            raise ObjectDoesNotExist(f"Объект c id={pk} в модели Floor не найден.")
-        except MultipleObjectsReturned:
-            raise MultipleObjectsReturned(f"Что то пошло не так, из модели Floor вернулось более чем один объект.")
-        flats = floor.flat_set.all()
-
+        flats, floor = FloorRepository.fetch_floor_detail(pk)
         data = FloorSelector.query_set_to_dataclass(flats, floor)
 
         return data

@@ -1,15 +1,13 @@
 from typing import List
 
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-
 from realty.domain.building.entities import BuildingDetailEntity, BuildingEntity
-from realty.models.building import Building
+from realty.repositories.building import BuildingRepository
 
 
 class BuildingSelector:
     @staticmethod
     def get_all_buildings() -> List[BuildingEntity]:
-        buildings = Building.objects.select_related('project').all()
+        buildings = BuildingRepository.fetch_all_buildings()
         data = [
             BuildingEntity(
                 id=building.id,
@@ -33,15 +31,8 @@ class BuildingSelector:
 
     @staticmethod
     def get_building_detail(pk) -> List[BuildingDetailEntity]:
-        try:
-            building = Building.objects.prefetch_related(
-                'flat_set__floor',
-                'flat_set__category',
-                'flat_set__building'
-            ).get(id=pk)
-        except (ObjectDoesNotExist, MultipleObjectsReturned):
-            return None
-        total_flats = building.flat_set.count()
+        building, total_flats = BuildingRepository.fetch_building_detail(pk)
+
         data = BuildingDetailEntity(
             id=building.id,
             floors=building.floors,
