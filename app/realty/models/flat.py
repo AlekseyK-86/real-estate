@@ -14,13 +14,13 @@ from realty.mixins import UploadToMixin
 
 class Flat(UploadToMixin, models.Model):
 
-    def upload_to(instance, filename):
-        UploadToMixin.valid_extensions(instance, filename)
+    def upload_to(self, filename):
+        self.valid_extensions(filename)
 
-        flat_rooms = str(instance.rooms)
-        building_number = str(instance.building.number)
-        project_name = str(instance.building.project.name)
-        flat_description = instance.description.replace(" ", "_")
+        flat_rooms = str(self.rooms)
+        building_number = str(self.building.number)
+        project_name = str(self.building.project.name)
+        flat_description = self.description.replace(" ", "_")
 
         current_time = datetime.now().strftime("%Y%m%d_%H%M%S")        
         short_hash = hashlib.md5(str(flat_description + current_time).encode()).hexdigest()[:8]

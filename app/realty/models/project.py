@@ -8,10 +8,10 @@ from realty.mixins import UploadToMixin
 
 class Project(UploadToMixin, models.Model):
 
-    def upload_to(instance, filename):
-        UploadToMixin.valid_extensions(instance, filename)
+    def upload_to(self, filename):
+        self.valid_extensions(filename)
                 
-        project_name = str(instance.name)
+        project_name = str(self.name)
 
         return os.path.join('photos/', project_name, filename)
     

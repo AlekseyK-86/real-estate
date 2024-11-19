@@ -9,11 +9,11 @@ from realty.mixins import UploadToMixin
 
 class Building(UploadToMixin, models.Model):
 
-    def upload_to(instance, filename):
-        UploadToMixin.valid_extensions(instance, filename)
+    def upload_to(self, filename):
+        self.valid_extensions(filename)
 
-        building_number = str(instance.number)
-        project_name = instance.project.name.replace(" ", "_")
+        building_number = str(self.number)
+        project_name = self.project.name.replace(" ", "_")
 
         return os.path.join('photos/',project_name, building_number, filename)
 
